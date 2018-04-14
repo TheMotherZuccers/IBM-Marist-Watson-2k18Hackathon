@@ -3,8 +3,12 @@ package com.themotherzuccers.gitefficient.githubinteractions;
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
 import com.jcabi.http.response.JsonResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.json.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,8 +82,17 @@ public class CommitFetcher {
               commits.add(commitArray.getJSONObject(i));
             }
 
+            String dateStr = jsonObject.getString("created_at");
+            //2018-04-14T14:19:34Z Gotta remove the bad characters
+            dateStr = dateStr.replace("T", " ");
+            dateStr = dateStr.replace("Z", "");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.util.Date createdAt = dateFormat.parse(dateStr);
+            System.out.println(createdAt.toString());
+
             for (JSONObject commit : commits) {
-              System.out.println(commit.getString("message"));
+              System.out.println("SHA: " + commit.getString("sha"));
+              System.out.println("Message: " + commit.getString("message"));
             }
           }
         }
