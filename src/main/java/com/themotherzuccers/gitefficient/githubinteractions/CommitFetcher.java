@@ -1,5 +1,11 @@
 package com.themotherzuccers.gitefficient.githubinteractions;
 
+import com.jcabi.github.Github;
+import com.jcabi.github.RtGithub;
+import com.jcabi.http.response.JsonResponse;
+import java.util.List;
+import javax.json.JsonObject;
+
 public class CommitFetcher {
   public static void main(String[] args) {
     try {
