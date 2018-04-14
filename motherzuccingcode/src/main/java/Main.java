@@ -10,7 +10,7 @@ public class Main {
         try {
             final Github github = new RtGithub();
             final JsonResponse resp = github.entry()
-                    .uri().path("/search")
+                    .uri().path("/search/users")
                     .queryParam("q", "williamkluge").queryParam("type", "Users").back()
                     .fetch()
                     .as(JsonResponse.class);
