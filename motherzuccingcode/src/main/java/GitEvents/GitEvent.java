@@ -3,6 +3,7 @@ package GitEvents;
 import java.util.Scanner;
 import java.util.*;
 
+//We can search the list of GitEvents by when files are changed
 public class GitEvent {
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
@@ -14,7 +15,7 @@ public class GitEvent {
         //Commit message (string)
         //GitEvents.GitSubtraction
         //Date/time ()
-        //Making a list searchable with comparables
+        //Making a list, given JSON file of Git commit, searchable with comparables
 
 
 
