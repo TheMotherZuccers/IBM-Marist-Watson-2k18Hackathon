@@ -1,3 +1,6 @@
+# Enviroment Variable File
+.env
+
 # IntelliJ files
 *.idea
 
