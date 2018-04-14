@@ -20,12 +20,13 @@ public class CSVWriter {
     csvDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     try {
       csvWriter = new PrintWriter(
-          new File(new SimpleDateFormat("yyyy-MM-dd hh-mm-ss'.tsv'").format(new Date()) + ".csv"));
+          new File(new SimpleDateFormat("yyyy-MM-dd hh-mm-ss'.csv'").format(new Date())));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     csvBuilder = new StringBuilder();
 
+    this.columns = new ArrayList<String>();
     this.columns.addAll(Arrays.asList(columns));
 
     for (String columnHeader : columns) {
@@ -41,10 +42,16 @@ public class CSVWriter {
     }
 
     for (String value : values) {
+      // No newlines in CSV where they arne't allowed
+      value = value.replaceAll("[\n]", "");
       csvBuilder.append(value).append(",");
     }
 
     csvBuilder.replace(csvBuilder.length() - 1, csvBuilder.length(), "\n");
+  }
+
+  public String formatDateForCSV(Date date) {
+    return csvDateFormat.format(date);
   }
 
   public void writeFile() {

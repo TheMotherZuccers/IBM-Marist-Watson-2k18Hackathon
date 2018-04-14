@@ -3,6 +3,7 @@ package com.themotherzuccers.gitefficient.githubinteractions;
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
 import com.jcabi.http.response.JsonResponse;
+import com.themotherzuccers.gitefficient.filehandling.CSVWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class CommitFetcher {
   }
 
   public static void main(String[] args) {
+    CSVWriter csvWriter = new CSVWriter("Date", "Message");
+
     try {
       final Github github = new RtGithub();
       final JsonResponse resp = github.entry()
@@ -92,10 +95,13 @@ public class CommitFetcher {
 
             for (JSONObject commit : commits) {
               System.out.println("SHA: " + commit.getString("sha"));
-              System.out.println("Message: " + commit.getString("message"));
+              String message = commit.getString("message");
+              System.out.println("Message: " + message);
+              csvWriter.addValues(csvWriter.formatDateForCSV(createdAt), message);
             }
           }
         }
+        csvWriter.writeFile();
       }
     } catch (Exception e) {
       e.printStackTrace();
