@@ -1,36 +1,77 @@
-import java.io.FileReader;
-import java.util.Iterator;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+//Find the name of method in line of code
+//Find previous changes in past commits
+import java.util.Scanner;
+import java.io.*;
 
-public class DannyTest {
+public class DannyTest{
 
-    @SuppressWarnings("unchecked")
-    public static void main(String[] args) {
-        JSONParser parser = new JSONParser();
+    public static void main(String[] args){
+        Scanner input = new Scanner(System.in);
 
+        String longest = "";
+        String shortest = "";
+
+        String fileName = input.nextLine();
+
+        FileReader fReader;
         try {
+            fReader = new FileReader(fileName);
+            BufferedReader reader = new BufferedReader(fReader);
+            String cursor; //
+            String content = "";
+            int lines = 0;
+            int words = 0;
+            int chars = 0;
 
-                Object obj = parser.parse(new FileReader(
-                    "/Users/<username>/Documents/file1.txt"));
 
-            JSONObject jsonObject = (JSONObject) obj;
+            while((cursor = reader.readLine()) != null){
+                // count lines
+                lines += 1;
+                content += cursor;
 
-            String name = (String) jsonObject.get("Name");
-            String author = (String) jsonObject.get("Author");
-            JSONArray companyList = (JSONArray) jsonObject.get("Company List");
+                // count words
+                String []_words = cursor.split(" ");
+                for( String w : _words)
+                {
+                    words++;
+                }
 
-            System.out.println("Name: " + name);
-            System.out.println("Author: " + author);
-            System.out.println("\nCompany List:");
-            Iterator<String> iterator = companyList.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
             }
+            chars = content.length();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("The filename is " + fileName);
+            System.out.println(chars + " Characters,");
+            System.out.println(words + " words and " + lines + " lines.");
+            while((cursor = reader.readLine()) != null){
+                // compare shortest and longest.
+                int currentSize = cursor.length();
+
+                if (currentSize > longest.length() || longest.equals("")) {
+                    longest = cursor;
+                } else if (currentSize < shortest.length() || longest.equals("")) {
+                    shortest = cursor;
+                }
+                // count lines
+                lines += 1;
+                content += cursor;
+                // count words
+                String []_words = cursor.split(" ");
+                for( String w : _words)
+                {
+                    words++;
+                }
+                System.out.println("Longest line has " + longest.length());
+                System.out.println("Shortest line has " + shortest.length());
+            }
+        } catch (FileNotFoundException ex) {
+            // Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("File not found!");
+        } catch (IOException ex) {
+            //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("An error has occured: " + ex.getMessage());
         }
+
     }
+
+
 }
