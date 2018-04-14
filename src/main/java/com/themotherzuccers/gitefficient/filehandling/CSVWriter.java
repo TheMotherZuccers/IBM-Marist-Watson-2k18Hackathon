@@ -20,7 +20,8 @@ public class CSVWriter {
     csvDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     try {
       csvWriter = new PrintWriter(
-          new File(new SimpleDateFormat("yyyy-MM-dd hh-mm-ss'.csv'").format(new Date())));
+          new File("csv_output/" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss'.csv'")
+              .format(new Date())));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }

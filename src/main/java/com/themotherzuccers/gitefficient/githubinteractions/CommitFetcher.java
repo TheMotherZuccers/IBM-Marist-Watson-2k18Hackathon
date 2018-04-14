@@ -1,9 +1,13 @@
 package com.themotherzuccers.gitefficient.githubinteractions;
 
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.DocumentAnalysis;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
 import com.jcabi.http.response.JsonResponse;
 import com.themotherzuccers.gitefficient.filehandling.CSVWriter;
+import com.themotherzuccers.gitefficient.watsonintegration.ToneAnalyzing;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,7 +58,9 @@ public class CommitFetcher {
   }
 
   public static void main(String[] args) {
-    CSVWriter csvWriter = new CSVWriter("Date", "Message");
+    CSVWriter csvWriter = new CSVWriter("Date", "Hour", "Message", "Anger", "Fear", "Joy",
+        "Sadness", "Analytical", "Confident", "Tentative");
+    ToneAnalyzing toneAnalyzing = new ToneAnalyzing();
 
     try {
       final Github github = new RtGithub();
@@ -97,7 +103,37 @@ public class CommitFetcher {
               System.out.println("SHA: " + commit.getString("sha"));
               String message = commit.getString("message");
               System.out.println("Message: " + message);
-              csvWriter.addValues(csvWriter.formatDateForCSV(createdAt), message);
+              DocumentAnalysis toneAnalysis = toneAnalyzing.analyzetone(message).getDocumentTone();
+              Double angerScore = 0.0;
+              Double fearScore = 0.0;
+              Double joyScore = 0.0;
+              Double sadnessScore = 0.0;
+              Double analyticalScore = 0.0;
+              Double confidentScore = 0.0;
+              Double tentativeScore = 0.0; // Yeah, I know this is bad, just getting it working
+              for (ToneScore toneScore : toneAnalysis.getTones()) {
+                String toneId = toneScore.getToneId();
+                if (toneId.equals("anger")) {
+                  angerScore = toneScore.getScore();
+                } else if (toneId.equals("fear")) {
+                  fearScore = toneScore.getScore();
+                } else if (toneId.equals("joy")) {
+                  joyScore = toneScore.getScore();
+                } else if (toneId.equals("sadness")) {
+                  sadnessScore = toneScore.getScore();
+                } else if (toneId.equals("analytical")) {
+                  analyticalScore = toneScore.getScore();
+                } else if (toneId.equals("confident")) {
+                  confidentScore = toneScore.getScore();
+                } else if (toneId.equals("tentative")) {
+                  tentativeScore = toneScore.getScore();
+                }
+              }
+              csvWriter.addValues(csvWriter.formatDateForCSV(createdAt),
+                  String.valueOf(createdAt.getHours()), message,
+                  String.valueOf(angerScore), String.valueOf(fearScore), String.valueOf(joyScore),
+                  String.valueOf(sadnessScore), String.valueOf(analyticalScore),
+                  String.valueOf(confidentScore), String.valueOf(tentativeScore));
             }
           }
         }

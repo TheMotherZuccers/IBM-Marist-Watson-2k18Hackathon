@@ -23,4 +23,13 @@ public class ToneAnalyzing {
       return toneAnalyzer.tone(toneOptions).execute();
     }
 
+  public static void main(String[] args) {
+    ToneAnalyzing toneAnalyzing = new ToneAnalyzing();
+
+    String text = "Damion?! More like LAMEion! haha yeet gotem!";
+    ToneAnalysis tone = toneAnalyzing.analyzetone(text);
+    System.out.println(tone);
+
+  }
+
 }
