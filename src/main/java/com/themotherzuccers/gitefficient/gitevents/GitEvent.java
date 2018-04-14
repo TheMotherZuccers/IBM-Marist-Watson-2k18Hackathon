@@ -10,11 +10,12 @@ public class GitEvent {
 
         String CommitMessage;
 
-        //GitAddition
+        //GitAddition, Uses type: CreateEvent in JSON file
         //Commit message (string)
-        //GitSubtraction
+        //GitSubtraction, Uses type: DeleteEvent in JSON file also
         //Date/time ()
-        //Making a list, given JSON file of Git commit, searchable with comparables
+        //Making a list, given JSON file of Git commit, searchable with comparable
+        //Will be able to tell what was changed between commits in JSON using type: PushEvent
 
 
 
