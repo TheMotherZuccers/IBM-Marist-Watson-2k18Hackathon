@@ -1,0 +1,42 @@
+BODY {background-color:  #4071B3}
+
+h1 {font-family:'IBM Plex Sans Condensed', sans-serif;}
+
+h1 {color:   #ffffff}
+
+h1 {font-size: 50pt}
+
+h1 {text-align: center}
+
+h2 {font-family:'IBM Plex Sans Condensed', sans-serif;}
+
+h2 {color:   #ffffff}
+
+h2 {font-size: 15pt}
+
+h2 {text-align: center}
+
+p {font-family:'IBM Plex Sans Condensed', sans-serif;}
+
+p {color:   #ffffff}
+
+p {font-size: 12pt}
+
+p {text-align: center}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #ffffff;
+    font-family:'IBM Plex Sans Condensed', sans-serif;
+    font-size: 11pt;
+    border: none;
+    color: #4071B3;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+
+
+/* <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans++Condensed:300" */
